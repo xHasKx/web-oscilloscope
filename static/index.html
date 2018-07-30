@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Oscilloscope</title>
+</head>
+<body>
+    <h1>Oscilloscope</h1>
+
+    <canvas id="osc" width="1000" height="600"></canvas>
+
+    <script type="text/javascript">
+        // setup drawing
+        var osc = document.getElementById('osc');
+        var width = osc.getAttribute("width");
+        var height = osc.getAttribute("height");
+
+        var max_y = 65535;
+
+        function view_x(x, len) {
+            return x * width / len;
+        }
+
+        function view_y(y) {
+            return height - y * height / max_y;
+        }
+
+        // connect to websocket
+        var socket = new WebSocket('ws://localhost:8080/ws');
+        socket.onopen = function() {
+            // bind to socket events
+            socket.onmessage = function(event) {
+                // console.log('msg from server:', event);
+                var data = JSON.parse(event.data);
+
+                // prepare drawing
+                var ctx = osc.getContext('2d');
+                ctx.fillStyle = '#FFFFFF';
+                ctx.strokeStyle = '#000000';
+
+                // clear screen
+                ctx.clearRect(0, 0, width, height);
+                // draw line
+                ctx.beginPath();
+
+                var len = data.length;
+                if (len > 0) {
+                    ctx.moveTo(0, view_y(data[0]));
+                    for (var i = 1; i < len; i++)
+                        ctx.lineTo(view_x(i, len), view_y(data[i]));
+                    ctx.stroke();
+                }
+            };
+            socket.onerror = function(event) {
+                console.log('error:', event);
+            };
+            socket.onclose = function(event) {
+                console.log('close:', event.wasClean, event);
+            }
+            // send configuration
+            socket.send(JSON.stringify({'interval': 0.1}));
+        };
+    </script>
+</body>
+</html>
