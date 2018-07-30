@@ -1,5 +1,7 @@
 # Web Oscilloscope Prototype
 
+...as an experiment...
+
 ## Technologies
 
 * Python >= 3.6
@@ -19,6 +21,6 @@
 * Server sends current points every 0.1 second to opened websocket
 * index.html draws points on canvas on every server message
 
-## Video
+## How It Looks
 
 [Youtube](https://youtu.be/kylLA-0pHLY)
