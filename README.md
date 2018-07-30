@@ -21,6 +21,22 @@
 * Server sends current points every 0.1 second to opened websocket
 * index.html draws points on canvas on every server message
 
+## How To Run
+
+On Debian GNU/Linux:
+
+    # clone repo and prepare:
+    git clone https://github.com/xHasKx/web-oscilloscope
+    cd web-oscilloscope
+    python3 -m venv env
+    . env/bin/activate
+
+    # start server:
+    ./server.py
+
+    # send random data to server:
+    ./sender.py
+
 ## How It Looks
 
 [Youtube](https://youtu.be/kylLA-0pHLY)
