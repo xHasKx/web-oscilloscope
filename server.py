@@ -39,7 +39,7 @@ async def index(request):
     return aiohttp.web.FileResponse('static/index.html')
 
 
-async def websocket_handler(request):
+async def points_websocket_handler(request):
     global points
     print('Websocket connection starting')
     ws = aiohttp.web.WebSocketResponse()
@@ -68,7 +68,7 @@ def main():
     # prepare web application
     app = aiohttp.web.Application()
     app.router.add_route('GET', '/', index)
-    app.router.add_route('GET', '/ws', websocket_handler)
+    app.router.add_route('GET', '/points', points_websocket_handler)
 
     # prepare and start udp server
     loop = asyncio.get_event_loop()

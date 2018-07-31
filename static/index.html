@@ -25,7 +25,7 @@
         }
 
         // connect to websocket
-        var socket = new WebSocket('ws://localhost:8080/ws');
+        var socket = new WebSocket(window.location.origin.replace(/^http/, 'ws') + '/points');
         socket.onopen = function() {
             // bind to socket events
             socket.onmessage = function(event) {
