@@ -30,6 +30,9 @@ On Debian GNU/Linux:
     cd web-oscilloscope
     python3 -m venv env
     . env/bin/activate
+    
+    # install dependencies into prepared virtualenv
+    pip install -r requirements.txt
 
     # start server:
     ./server.py
